@@ -80,7 +80,7 @@ Implement a script that allows us to run model (`y`) on a given problem for a sp
 Please submit the following in a single repository or ZIP:
 
 1.  **`README.md`** with:
-    * An overview of your chosen task `x` and why it meets the performance criteria.
+    * An overview of your chosen task `x` and why it meets the performance criteria, model used, etc.
     * A description of your synthetic data generation strategy.
     * Instructions on how to install dependencies and run your scripts.
 2.  **`generate.py`** (or equivalent):
@@ -92,6 +92,8 @@ Please submit the following in a single repository or ZIP:
 4.  **`evaluate.py`** (or equivalent):
     * A script that lets us run one of your example problems through the model and verifies the output, with multiple attempts.
     * Should include prompt construction and response parsing logic.
+5.  **`problems.{jsonl|parquet|csv}`**
+    * A set of 3 or more example generated problems that fall within the 10-90% success rate bucket.
 
 ## 6. Timeline & Submission
 
