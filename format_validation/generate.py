@@ -145,7 +145,7 @@ def validate_html_with_external_tool(html: str) -> Tuple[bool, List[str]]:
         
         # Parse with html5lib (more lenient but standards-compliant)
         try:
-            doc = parse(html, tree="etree", namespaceHTMLElements=False)
+            doc = parse(html, namespaceHTMLElements=False)
             return True, []
         except Exception as e:
             return False, [f"HTML5 parsing error: {str(e)}"]
