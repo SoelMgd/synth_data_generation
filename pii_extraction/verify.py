@@ -100,4 +100,77 @@ def get_extraction_details(problem: PIIProblem, llm_response: str) -> Dict:
     
     result["success"] = len(result["missing_entities"]) == 0
     
-    return result 
+    return result
+
+def load_problems_from_file(file_path: str) -> List[PIIProblem]:
+    """Load PII problems from JSON file."""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    problems = []
+    for item in data:
+        pii = PII(entities=item['pii']['entities'])
+        problem = PIIProblem(
+            text=item['text'],
+            pii=pii,
+            document_type=item.get('document_type', 'unknown')
+        )
+        problems.append(problem)
+    
+    return problems
+
+def evaluate_single_problem(problem: PIIProblem, llm_response: str) -> Dict:
+    """Evaluate LLM performance on a single PII problem."""
+    try:
+        if not llm_response:
+            return {
+                "success": False,
+                "error": "Failed to get LLM response",
+                "details": None
+            }
+        
+        success = verify_solution(problem, llm_response)
+        details = get_extraction_details(problem, llm_response)
+        
+        return {
+            "success": success,
+            "error": None,
+            "details": details,
+            "llm_response": llm_response
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "details": None
+        }
+
+def evaluate_all_problems(problems: List[PIIProblem], llm_responses: List[str]) -> Dict:
+    """Evaluate LLM performance on all problems."""
+    results = []
+    successful = 0
+    total = len(problems)
+    
+    for i, (problem, llm_response) in enumerate(zip(problems, llm_responses)):
+        result = evaluate_single_problem(problem, llm_response)
+        results.append(result)
+        
+        if result["success"]:
+            successful += 1
+    
+    success_rate = successful / total if total > 0 else 0
+    
+    parsing_failures = sum(1 for r in results if r["details"] and not r["details"]["parsed_successfully"])
+    extraction_errors = sum(1 for r in results if r["error"] is not None)
+    
+    summary = {
+        "total_problems": total,
+        "successful": successful,
+        "success_rate": success_rate,
+        "parsing_failures": parsing_failures,
+        "extraction_errors": extraction_errors,
+        "detailed_results": results
+    }
+    
+    return summary 

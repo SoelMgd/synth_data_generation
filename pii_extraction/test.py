@@ -6,8 +6,7 @@ from typing import List, Dict, Optional
 from dotenv import load_dotenv
 from mistralai import Mistral
 
-from .types import PII, PIIProblem
-from .verify import verify_solution, get_extraction_details
+from .verify import load_problems_from_file, evaluate_all_problems
 
 load_dotenv()
 
@@ -93,109 +92,47 @@ def extract_pii_with_llm(text: str, client: Mistral, max_retries: int = 3) -> Op
     
     return None
 
-def evaluate_single_problem(problem: PIIProblem, client: Mistral, verbose: bool = False) -> Dict:
-    """
-    Evaluate LLM performance on a single PII problem.
-    """
-    try:
-        llm_response = extract_pii_with_llm(problem.text, client)
-        
-        if llm_response is None:
-            return {
-                "success": False,
-                "error": "Failed to get LLM response",
-                "details": None
-            }
-        
-        success = verify_solution(problem, llm_response)
-        details = get_extraction_details(problem, llm_response)
-        
-        if verbose:
-            print(f"Problem: {problem.document_type}")
-            print(f"Success: {success}")
-            print(f"Ground truth: {problem.pii.entities}")
-            print(f"Extracted: {details['extracted']}")
-            if not success:
-                print(f"Issues: Missing={details['missing_entities']}")
-            print("-" * 50)
-        
-        return {
-            "success": success,
-            "error": None,
-            "details": details,
-            "llm_response": llm_response
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "details": None
-        }
-
-def load_problems_from_file(file_path: str) -> List[PIIProblem]:
-    """
-    Load PII problems from JSON file.
-    """
-    with open(file_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    problems = []
-    for item in data:
-        pii = PII(entities=item['pii']['entities'])
-        problem = PIIProblem(
-            text=item['text'],
-            pii=pii,
-            document_type=item.get('document_type', 'unknown')
-        )
-        problems.append(problem)
-    
-    return problems
-
-def evaluate_all_problems(problems_file: str, verbose: bool = False) -> Dict:
-    """
-    Evaluate LLM performance on all problems from a file.
-    """
+def run_evaluation(problems_file: str, verbose: bool = False) -> Dict:
+    """Run evaluation on all problems from a file."""
     problems = load_problems_from_file(problems_file)
     client = get_mistral_client()
     
-    results = []
-    successful = 0
-    total = len(problems)
+    print(f"Evaluating {len(problems)} PII extraction problems...")
     
-    print(f"Evaluating {total} problems...")
-    
+    llm_responses = []
     for i, problem in enumerate(problems):
-        print(f"Evaluating problem {i + 1}/{total}...")
+        print(f"Getting LLM response for problem {i + 1}/{len(problems)}...")
         
-        result = evaluate_single_problem(problem, client, verbose)
-        results.append(result)
-        
-        if result["success"]:
-            successful += 1
+        try:
+            llm_response = extract_pii_with_llm(problem.text, client)
+            llm_responses.append(llm_response if llm_response else "")
+        except Exception as e:
+            print(f"Error getting response for problem {i + 1}: {e}")
+            llm_responses.append("")
     
-    success_rate = successful / total if total > 0 else 0
+    results = evaluate_all_problems(problems, llm_responses)
     
-    parsing_failures = sum(1 for r in results if r["details"] and not r["details"]["parsed_successfully"])
-    extraction_errors = sum(1 for r in results if r["error"] is not None)
+    if verbose:
+        for i, (problem, result) in enumerate(zip(problems, results["detailed_results"])):
+            print(f"\nProblem {i + 1}: {problem.document_type}")
+            print(f"Success: {result['success']}")
+            if result["details"]:
+                print(f"Ground truth: {result['details']['ground_truth']}")
+                print(f"Extracted: {result['details']['extracted']}")
+                if not result['success']:
+                    print(f"Missing: {result['details']['missing_entities']}")
+            if result["error"]:
+                print(f"Error: {result['error']}")
+            print("-" * 50)
     
-    summary = {
-        "total_problems": total,
-        "successful": successful,
-        "success_rate": success_rate,
-        "parsing_failures": parsing_failures,
-        "extraction_errors": extraction_errors,
-        "detailed_results": results
-    }
-    
-    return summary
+    return results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate LLM performance on PII extraction")
     parser.add_argument(
         "--problems-file",
         type=str,
-        default="data/problems.json",
+        default="pii_extraction/data/problems.json",
         help="Path to JSON file containing PII problems"
     )
     parser.add_argument(
@@ -213,10 +150,10 @@ if __name__ == "__main__":
     
     if not Path(args.problems_file).exists():
         print(f"Error: Problems file {args.problems_file} does not exist")
-        print("Generate problems first using: uv run python -m pii_masking.generate --output data/problems.json")
+        print("Generate problems first using: uv run python -m pii_extraction.generate --output pii_extraction/data/problems.json")
         exit(1)
     
-    results = evaluate_all_problems(args.problems_file, args.verbose)
+    results = run_evaluation(args.problems_file, args.verbose)
     
     print("\n" + "=" * 60)
     print("EVALUATION SUMMARY")
