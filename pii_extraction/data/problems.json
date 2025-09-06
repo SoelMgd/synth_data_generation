@@ -1,0 +1,324 @@
+[
+  {
+    "text": "**Clause 5.2 – Modalités d’accès aux systèmes internes**\n\nConformément aux dispositions relatives à l’accès sécurisé aux outils de gestion, il est précisé que René Carlier, affecté au service Finance, se voit attribuer un identifiant personnel pour l’utilisation des plateformes internes. Celui-ci, défini comme *manon24*, devra être utilisé exclusivement dans le cadre professionnel, en respectant les horaires d’accès autorisés, notamment pour les connexions en dehors des plages standards, telles que celle enregistrée à 21:47 lors de la dernière mise à jour des rapports trimestriels.\n\nPar ailleurs, cette clause s’applique également aux collaboratrices en contrat à temps partiel, dont les droits d’accès sont ajustés en fonction de leur volume horaire. À titre d’exemple, une utilisatrice déclarée de genre *Femme* dans les paramètres du système bénéficiera des mêmes protocoles de sécurité, avec une restriction des fonctionnalités proportionnelle à son statut.\n\nLes identifiants mentionnés ci-dessus ne peuvent en aucun cas être partagés ou utilisés par un tiers, sous peine de sanctions disciplinaires conformes au règlement intérieur. Toute anomalie ou tentative d’accès non autorisé devra être signalée immédiatement au responsable du service concerné.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "René"
+        ],
+        "LASTNAME": [
+          "Carlier"
+        ],
+        "JOBAREA": [
+          "Finance"
+        ],
+        "USERNAME": [
+          "manon24"
+        ],
+        "TIME": [
+          "21:47"
+        ],
+        "GENDER": [
+          "Femme"
+        ],
+        "JOBTYPE": [
+          "Temps partiel"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Clause relative à la représentation légale**\n\nDans le cadre des présentes, il est expressément convenu que Catherine Lambert agit en qualité de représentant désigné pour les besoins de la présente convention. Conformément aux dispositions légales en vigueur, cette désignation s’applique sans restriction aux actes et décisions relevant du périmètre défini ci-après.\n\nIl est par ailleurs précisé que, bien que le nom Lambert soit associé à ce mandat, la personne désignée n’a aucun lien de parenté ou d’affiliation avec d’autres membres de l’équipe, y compris ceux dont le genre pourrait différer, tel qu’un homme éventuellement mentionné dans d’autres clauses ou annexes du présent document. Cette distinction vise à éviter toute confusion quant aux responsabilités respectives des parties impliquées.\n\nLes prérogatives attachées à cette représentation s’exercent dans le strict respect des limites fixées par la convention, et toute modification devra faire l’objet d’un avenant signé par les parties. Catherine Lambert s’engage à informer sans délai l’entreprise de tout changement susceptible d’affecter l’exécution de ses missions.\n\nLa présente clause ne saurait être interprétée comme conférant des droits ou obligations à des tiers non expressément nommés dans ce document.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Catherine"
+        ],
+        "LASTNAME": [
+          "Lambert"
+        ],
+        "GENDER": [
+          "Homme"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Objet : Suivi de votre demande**\n\nCher Frédéric Baudry,\n\nNous vous remercions pour votre retour concernant les éléments évoqués lors de notre dernier échange. Votre demande a été transmise à l’équipe concernée, qui procède actuellement à son examen.\n\nConformément à vos attentes, nous veillons à ce que les informations communiquées soient traitées avec la plus grande attention. Un accusé de réception détaillé vous sera adressé dès que les vérifications nécessaires auront été finalisées.\n\nN’hésitez pas à nous faire part de toute question complémentaire en nous contactant directement. Nous restons à votre entière disposition pour vous accompagner dans cette démarche.\n\nBien cordialement,\n**L’équipe administrative**",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Frédéric"
+        ],
+        "LASTNAME": [
+          "Baudry"
+        ]
+      }
+    },
+    "document_type": "letter"
+  },
+  {
+    "text": "**Extrait d’un compte-rendu médical – Suivi patient**\n\n*Contexte :*\nDans le cadre du suivi coordonné avec les professionnels de santé de la région, nous confirmons avoir reçu les derniers éléments relatifs à **Frédérique Perrier**, résidant au **242, rue Odette Lacroix**. Les informations transmises par les acteurs locaux de **Bourgogne-Franche-Comté** ont permis de compléter l’évaluation initiale et d’adapter le protocole en conséquence.\n\n*Recommandations :*\nUne synthèse des observations sera adressée sous peu à l’attention de **Frédérique Perrier** à l’adresse indiquée, afin de lui proposer un rendez-vous de suivi avec notre équipe. Ce document intègrera également les coordonnées des structures partenaires en **Bourgogne-Franche-Comté**, pour faciliter l’accès aux soins de proximité si nécessaire.\n\n*Prochaines étapes :*\nNous restons à disposition pour toute question concernant ce suivi et invitons **Frédérique Perrier** à nous signaler tout changement concernant son adresse actuelle (**242, rue Odette Lacroix**) ou ses besoins en matière d’accompagnement. La coordination entre les services de la région **Bourgogne-Franche-Comté** et notre plateforme permettra d’assurer une prise en charge fluide et personnalisée.\n\n---\n*Note : Ce document est généré à titre indicatif et ne remplace pas un avis médical professionnel.*",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Frédérique"
+        ],
+        "LASTNAME": [
+          "Perrier"
+        ],
+        "STREET": [
+          "242, rue Odette Lacroix"
+        ],
+        "STATE": [
+          "Bourgogne-Franche-Comté"
+        ]
+      }
+    },
+    "document_type": "medical"
+  },
+  {
+    "text": "**Clause financière et modalités de contact**\n\nConformément aux accords passés entre les parties, il est précisé que le compte bancaire désigné pour les transactions liées au présent contrat est le suivant : **FR3302175588637541560542203**. Toute opération financière devra être effectuée sur ce numéro de compte, sous réserve des vérifications d’usage par les services compétents.\n\nPour faciliter les échanges, les coordonnées de référence sont les suivantes :\n- **Martin Raynaud** est identifié comme l’interlocuteur principal pour les questions administratives, joignable au **07 99 93 73 25** ou via l’adresse **laetitialejeune@example.org**.\n- En cas d’absence, **Roux** assurera le relais pour les urgences opérationnelles.\n\nLe numéro de référence interne attribué à ce dossier est le **715460958666**. Toute correspondance écrite ou électronique devra mentionner ce code pour un traitement prioritaire.\n\nLes parties s’engagent à actualiser sans délai ces informations en cas de modification, sous peine de retard dans l’exécution des prestations prévues.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Martin"
+        ],
+        "LASTNAME": [
+          "Raynaud"
+        ],
+        "IBAN": [
+          "FR3302175588637541560542203"
+        ],
+        "ACCOUNTNUMBER": [
+          "715460958666"
+        ],
+        "EMAIL": [
+          "laetitialejeune@example.org"
+        ],
+        "CITY": [
+          "Roux"
+        ],
+        "PHONE": [
+          "07 99 93 73 25"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Objet : Accès à la plateforme éducative humanitaire**\n\nCher Franck Becker,\n\nNous vous remercions pour votre engagement dans le domaine de l’Éducation en tant qu’enseignant humanitaire. Votre profil a été validé avec succès sur notre système, et vos identifiants d’accès ont été générés pour vous permettre de consulter les ressources pédagogiques disponibles.\n\nPour vous connecter, utilisez l’adresse email **dgilles@example.net** ainsi que le mot de passe temporaire suivant : **S_Q7wcm6A%2J**. Nous vous invitons à le modifier dès votre première connexion pour des raisons de sécurité.\n\nPar ailleurs, vous trouverez sur le site **https://guillaume.fr/** des supports complémentaires adaptés à vos missions. Ces documents pourront être utiles dans le cadre de vos interventions sur le terrain.\n\nPour toute question ou besoin d’assistance, notre équipe reste à votre disposition. Vous pouvez également nous transmettre vos retours directement depuis l’adresse associée à votre compte.\n\nNous vous rappelons que les documents administratifs liés à votre activité peuvent être envoyés à l’adresse suivante : **rue de Girard**.\n\nBien cordialement,\n**L’équipe de coordination**",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Franck"
+        ],
+        "LASTNAME": [
+          "Becker"
+        ],
+        "EMAIL": [
+          "dgilles@example.net"
+        ],
+        "JOBAREA": [
+          "Éducation"
+        ],
+        "JOBTITLE": [
+          "enseignant humanitaire"
+        ],
+        "PASSWORD": [
+          "S_Q7wcm6A%2J"
+        ],
+        "URL": [
+          "https://guillaume.fr/"
+        ],
+        "STREET": [
+          "rue de Girard"
+        ]
+      }
+    },
+    "document_type": "medical"
+  },
+  {
+    "text": "**Clause de confidentialité et engagement personnel**\n\nConformément aux dispositions prévues par le présent accord, **Daniel Joly**, né le **05/04/1972**, s’engage à respecter strictement les obligations de confidentialité relatives aux informations sensibles auxquelles il pourrait avoir accès dans le cadre de ses fonctions au sein de l’entreprise.\n\nCette clause s’applique à compter de la date de signature du contrat et couvre l’intégralité des données, documents ou procédures internes communiqués oralement ou par écrit. **Daniel Joly** reconnaît expressément que toute divulgation non autorisée, qu’elle soit intentionnelle ou résultant d’une négligence, pourrait entraîner des poursuites conformément aux lois en vigueur.\n\nL’entreprise se réserve le droit de vérifier, à tout moment et sans préavis, le respect de ces engagements par **Daniel Joly**, notamment en cas de suspicion de manquement aux règles établies. Les présentes dispositions restent valables même après la fin de la collaboration, sans limitation de durée pour les informations classées comme stratégiques ou protégées par le secret professionnel.\n\nFait pour servir et valoir ce que de droit.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Daniel"
+        ],
+        "LASTNAME": [
+          "Joly"
+        ],
+        "DATE": [
+          "05/04/1972"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Article 5 – Accès aux systèmes internes**\n\nConformément aux dispositions du présent contrat, Hortense Peltier se voit attribuer un accès sécurisé aux outils numériques de l’entreprise. Son identifiant de connexion, **apinto**, ainsi que le mot de passe provisoire **Q%@2&lRhi!f@** lui ont été communiqués par le service informatique. Ces informations sont strictement personnelles et ne doivent en aucun cas être partagées.\n\nL’accès aux plateformes internes est réservé à un usage professionnel et doit être exercé dans le respect des politiques de sécurité en vigueur. Toute utilisation non autorisée ou toute négligence dans la protection de ces identifiants pourra entraîner la suspension immédiate des droits d’accès.\n\nHortense Peltier, résidant à Garcia-sur-Perrier, déclare avoir pris connaissance des règles d’utilisation des systèmes et s’engage à les respecter scrupuleusement. En sa qualité de **femme** intégrée à l’équipe, elle bénéficiera des mêmes droits et obligations que l’ensemble des collaborateurs en matière de cybersécurité.\n\nPour toute question relative à la gestion de son compte, elle est invitée à contacter le support technique via les canaux dédiés. Les identifiants provisoires devront être modifiés lors de la première connexion afin de renforcer la sécurité du système.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Hortense"
+        ],
+        "LASTNAME": [
+          "Peltier"
+        ],
+        "PASSWORD": [
+          "Q%@2&lRhi!f@"
+        ],
+        "USERNAME": [
+          "apinto"
+        ],
+        "CITY": [
+          "Garcia-sur-Perrier"
+        ],
+        "GENDER": [
+          "Femme"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Extrait du compte-rendu de création de compte – Plateforme SantéPro**\n\nLe 12 octobre à 16:54, un nouveau compte utilisateur a été généré pour le dossier associé au numéro d’identification bancaire **FR8959793880381467597234688**. Conformément aux procédures en vigueur, le mot de passe provisoire **qSP(j$u6b_cM** a été attribué et devra être modifié lors de la première connexion.\n\nCe profil, classé dans la catégorie *Autre* pour les droits d’accès, a été lié à l’adresse électronique professionnelle **jeanninefabre@example.net**, conformément aux informations transmises par le service administratif. Par ailleurs, les données de contact secondaires ont été enregistrées sous l’identifiant **constance.vallet**, comme indiqué dans le formulaire de référence.\n\nDans le cadre de la mise à jour des informations personnelles, la date de naissance **31/08/1966** a été validée et intégrée au système, tandis que le secteur d’activité principal a été défini comme *Éducation*. Les responsables concernés, **Bertrand** et **Denis**, ont été notifiés pour finaliser la configuration du compte et procéder aux vérifications d’usage.\n\nPour toute question relative à ce dossier, merci de vous référer aux coordonnées enregistrées ou de contacter notre support technique. Nous restons à votre disposition pour toute assistance complémentaire.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Bertrand"
+        ],
+        "LASTNAME": [
+          "Denis"
+        ],
+        "IBAN": [
+          "FR8959793880381467597234688"
+        ],
+        "GENDER": [
+          "Autre"
+        ],
+        "PASSWORD": [
+          "qSP(j$u6b_cM"
+        ],
+        "TIME": [
+          "16:54"
+        ],
+        "JOBAREA": [
+          "Éducation"
+        ],
+        "EMAIL": [
+          "jeanninefabre@example.net"
+        ],
+        "DATE": [
+          "31/08/1966"
+        ],
+        "ACCOUNTNAME": [
+          "constance.vallet"
+        ]
+      }
+    },
+    "document_type": "medical"
+  },
+  {
+    "text": "**Extrait d’un compte-rendu de visite médicale en entreprise**\n\nDans le cadre de notre campagne annuelle de prévention santé en milieu professionnel, une session dédiée au bien-être des salariés a été organisée au sein du service **Marketing**. Lors de cet échange, **Sylvie Fouquet** a particulièrement souligné l’importance d’adapter les horaires de travail aux rythmes biologiques pour limiter les risques de fatigue oculaire et de troubles musculo-squelettiques, fréquents dans les métiers nécessitant un temps prolongé devant écran.\n\nLes recommandations personnalisées qui lui ont été proposées intègrent des pauses actives ainsi qu’un aménagement ergonomique de son poste, en coordination avec les responsables du service. Un suivi sera assuré dans les prochains mois pour évaluer l’impact de ces mesures sur son confort au quotidien.\n\nCette initiative s’inscrit dans une démarche globale visant à concilier performance et qualité de vie au travail, en ciblant notamment les équipes dont les missions, comme celles liées au **Marketing**, impliquent une charge cognitive et visuelle soutenue.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Sylvie"
+        ],
+        "LASTNAME": [
+          "Fouquet"
+        ],
+        "JOBAREA": [
+          "Marketing"
+        ]
+      }
+    },
+    "document_type": "medical"
+  },
+  {
+    "text": "**Clause 4.2 – Accès aux outils professionnels et obligations de confidentialité**\n\nDans le cadre de ses fonctions au sein du service **Marketing**, Noémi Perez se voit attribuer un accès sécurisé aux plateformes internes de l’entreprise. Son identifiant de connexion, **marthe.delattre**, ainsi que le mot de passe associé, **H2jGToxwn%8$**, lui permettent d’accéder aux ressources nécessaires à l’exécution de ses missions. Elle s’engage à ne divulguer ces informations à aucun tiers et à les conserver de manière strictement confidentielle.\n\nPour les besoins de la gestion administrative, les coordonnées déclarées par Noémi Perez sont les suivantes : **732, rue de Coste**, située en **Île-de-France** (département **69**). Ces informations serviront notamment à l’envoi des documents contractuels et des relevés liés à son activité professionnelle.\n\nPar ailleurs, afin de faciliter les opérations financières liées à sa rémunération, le numéro IBAN **FR5690969305754126435306899** a été enregistré comme référence bancaire principale. Toute modification de ces données devra faire l’objet d’une notification écrite adressée au service des ressources humaines dans les meilleurs délais.\n\nNoémi Perez reconnaît avoir pris connaissance des présentes dispositions et s’engage à respecter les règles de sécurité et de confidentialité en vigueur au sein de l’entreprise.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Noémi"
+        ],
+        "LASTNAME": [
+          "Perez"
+        ],
+        "STREET": [
+          "732, rue de Coste"
+        ],
+        "STATE": [
+          "Île-de-France"
+        ],
+        "AGE": [
+          "69"
+        ],
+        "ACCOUNTNAME": [
+          "marthe.delattre"
+        ],
+        "PASSWORD": [
+          "H2jGToxwn%8$"
+        ],
+        "IBAN": [
+          "FR5690969305754126435306899"
+        ],
+        "JOBAREA": [
+          "Marketing"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Objet : Suivi des opérations conjointes – Dossier Thérèse et Vincent**\n\nChère équipe,\n\nDans le cadre du suivi des comptes associés aux opérations récentes, nous confirmons avoir traité les dernières instructions transmises par Thérèse et Vincent. Les modifications demandées ont été appliquées conformément aux accords préalablement validés, et les documents correspondants sont désormais disponibles en archive.\n\nPour rappel, les échanges initiaux entre Thérèse et notre service avaient permis de définir les modalités de gestion partagée, tandis que Vincent a complété les éléments nécessaires lors de son dernier entretien. Les deux parties ont été informées par courrier des mises à jour, et nous restons à leur disposition pour toute précision complémentaire.\n\nNous vous prions de bien vouloir vérifier que les références internes associées à ce dossier reflètent correctement les ajustements apportés. En cas de discordance, merci de nous signaler sans délai les écarts afin d’assurer une traçabilité irréprochable.\n\nBien cordialement,\n**Le service gestion clientèle**\n*Banque [Nom de l’établissement omis conformément aux instructions]*\n\n---\n*Note : Ce document est généré à titre d’exemple et ne contient que les informations explicitement autorisées. Toute ressemblance avec des situations réelles serait fortuite.*",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Thérèse"
+        ],
+        "LASTNAME": [
+          "Vincent"
+        ]
+      }
+    },
+    "document_type": "financial"
+  },
+  {
+    "text": "**Clause d’affectation et de mission – Contrat de collaboration**\n\nDans le cadre de la présente convention, Adélaïde et Hervé, en leur qualité de professionnels spécialisés, interviendront conjointement sur les projets confiés par l’entreprise. Leurs missions, définies en accord avec les besoins opérationnels, porteront principalement sur l’optimisation des interfaces utilisateur, conformément à l’expertise d’un web-ergonome.\n\nLe périmètre géographique des interventions sera centré sur le département de la Haute-Garonne, où se situent les principaux sites concernés par les audits et les recommandations ergonomiques. Les modalités pratiques d’organisation, notamment les déplacements éventuels ou les réunions de travail, feront l’objet d’un échange préalable entre les parties pour garantir une coordination efficace.\n\nLes livrables attendus, qu’il s’agisse de rapports d’analyse, de maquettes interactives ou de préconisations techniques, devront refléter une approche collaborative, combinant les compétences complémentaires d’Adélaïde et d’Hervé. Leur travail s’inscrira dans une démarche d’amélioration continue, en phase avec les standards du métier et les attentes formulées par les équipes internes.\n\nCette clause fait partie intégrante du contrat et ne peut être modifiée qu’avec l’accord écrit des deux parties. Toute adaptation des missions ou des zones d’intervention, notamment en dehors de la Haute-Garonne, devra être formalisée par un avenant signé.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Adélaïde"
+        ],
+        "LASTNAME": [
+          "Hervé"
+        ],
+        "JOBTITLE": [
+          "web-ergonome"
+        ],
+        "COUNTY": [
+          "Haute-Garonne"
+        ]
+      }
+    },
+    "document_type": "contract"
+  },
+  {
+    "text": "**Rapport médical – Suivi patient**\n\nDans le cadre du suivi médical de Frédéric Roche, une évaluation complète a été réalisée afin d’adapter le protocole de prise en charge. Les observations cliniques ont été consignées dans le dossier, et les recommandations ont été transmises aux professionnels concernés pour assurer une coordination optimale.\n\nLes prochaines étapes seront discutées lors de la prochaine consultation, où Frédéric Roche pourra échanger avec l’équipe soignante sur les ajustements éventuels. Une attention particulière sera portée à l’évolution des paramètres suivis, conformément aux bonnes pratiques en vigueur.\n\nPour toute question ou besoin de précisions, notre service reste à disposition pour accompagner Frédéric Roche dans son parcours de santé. Les modalités de suivi seront réévaluées en fonction des résultats obtenus.\n\nCe document est établi à des fins médicales et doit être conservé dans le dossier du patient.",
+    "pii": {
+      "entities": {
+        "FIRSTNAME": [
+          "Frédéric"
+        ],
+        "LASTNAME": [
+          "Roche"
+        ]
+      }
+    },
+    "document_type": "medical"
+  }
+]
