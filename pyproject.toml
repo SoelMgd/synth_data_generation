@@ -6,6 +6,7 @@ requires-python = ">=3.9"
 dependencies = [
     "argparse>=1.4.0",
     "faker>=37.6.0",
+    "html5lib>=1.1",
     "mistralai>=1.9.10",
     "pydantic>=2.0",
     "python-dotenv>=1.1.1",

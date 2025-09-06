@@ -116,8 +116,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--problems-file",
         type=str,
-        default="format_validation/data/problems.json",
-        help="Path to JSON file containing HTML validation problems"
+        default="format_validation/data/problems.jsonl",
+        help="Path to JSONL file containing HTML validation problems"
     )
     parser.add_argument(
         "--verbose",
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     
     if not Path(args.problems_file).exists():
         print(f"Error: Problems file {args.problems_file} does not exist")
-        print("Generate problems first using: uv run python -m format_validation.generate --output format_validation/data/problems.json")
+        print("Generate problems first using: uv run python -m format_validation.generate --num-samples 10")
         exit(1)
     
     results = run_evaluation(args.problems_file, args.verbose)

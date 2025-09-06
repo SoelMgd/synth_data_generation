@@ -108,17 +108,39 @@ def get_validation_details(problem: HTMLValidationProblem, llm_response: str) ->
     return result
 
 def load_problems_from_file(file_path: str) -> List[HTMLValidationProblem]:
-    """Load HTML validation problems from file."""
-    with open(file_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
+    """Load HTML validation problems from file (supports both JSON and JSONL formats)."""
     problems = []
-    for item in data:
-        problem = HTMLValidationProblem(
-            html_string=item['html_string'],
-            is_valid=item['is_valid']
-        )
-        problems.append(problem)
+    
+    # Determine file format based on extension
+    if file_path.endswith('.jsonl'):
+        # JSONL format - one JSON object per line
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line_num, line in enumerate(f, 1):
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    item = json.loads(line)
+                    problem = HTMLValidationProblem(
+                        html_string=item['html_string'],
+                        is_valid=item['is_valid']
+                    )
+                    problems.append(problem)
+                except json.JSONDecodeError as e:
+                    print(f"Warning: Skipping invalid JSON on line {line_num}: {e}")
+                except KeyError as e:
+                    print(f"Warning: Missing required field on line {line_num}: {e}")
+    else:
+        # JSON format - array of objects
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        for item in data:
+            problem = HTMLValidationProblem(
+                html_string=item['html_string'],
+                is_valid=item['is_valid']
+            )
+            problems.append(problem)
     
     return problems
 
