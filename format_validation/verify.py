@@ -1,62 +1,21 @@
 import json
 import re
-from typing import Dict, List, Optional
-from html.parser import HTMLParser
+from typing import Dict, List, Optional, Tuple
 from .types import HTMLValidationProblem
+from html5lib import parse
 
-class HTMLValidator(HTMLParser):
-    """Custom HTML parser to validate HTML syntax."""
-    
-    def __init__(self):
-        super().__init__()
-        self.errors = []
-        self.tag_stack = []
-        
-    def error(self, message):
-        self.errors.append(message)
-        
-    def handle_starttag(self, tag, attrs):
-        # Check for malformed attributes
-        for attr_name, attr_value in attrs:
-            if attr_value is None:
-                continue
-        
-        # Track opening tags (except self-closing ones)
-        if tag not in ['img', 'br', 'hr', 'input', 'meta', 'link']:
-            self.tag_stack.append(tag)
-    
-    def handle_endtag(self, tag):
-        if not self.tag_stack:
-            self.errors.append(f"Unexpected closing tag: {tag}")
-            return
-            
-        if self.tag_stack[-1] == tag:
-            self.tag_stack.pop()
-        else:
-            # Check if tag exists somewhere in stack (invalid nesting)
-            if tag in self.tag_stack:
-                self.errors.append(f"Invalid nesting: {tag}")
-            else:
-                self.errors.append(f"Unmatched closing tag: {tag}")
 
-def is_html_valid(html_string: str) -> bool:
-    """Check if an HTML string is syntactically valid."""
+def validate_html_with_external_tool(html: str) -> Tuple[bool, List[str]]:
+    """Validate HTML using html5lib (browser-standard validation)."""
     try:
-        validator = HTMLValidator()
-        validator.feed(html_string)
-        
-        # Check for unclosed tags
-        if validator.tag_stack:
-            return False
-            
-        # Check for parsing errors
-        if validator.errors:
-            return False
-            
-        return True
-        
-    except Exception:
-        return False
+        # Parse with html5lib
+        try:
+            doc = parse(html, namespaceHTMLElements=False)
+            return True, []
+        except Exception as e:
+            return False, [f"HTML5 parsing error: {str(e)}"]
+    except ImportError:
+        return False, ["html5lib library not found"]
 
 def parse_llm_verdict(llm_response: str) -> Optional[bool]:
     """Parse LLM response to extract verdict from <verdict> tags."""
@@ -111,9 +70,7 @@ def load_problems_from_file(file_path: str) -> List[HTMLValidationProblem]:
     """Load HTML validation problems from file (supports both JSON and JSONL formats)."""
     problems = []
     
-    # Determine file format based on extension
     if file_path.endswith('.jsonl'):
-        # JSONL format - one JSON object per line
         with open(file_path, 'r', encoding='utf-8') as f:
             for line_num, line in enumerate(f, 1):
                 line = line.strip()
@@ -131,7 +88,6 @@ def load_problems_from_file(file_path: str) -> List[HTMLValidationProblem]:
                 except KeyError as e:
                     print(f"Warning: Missing required field on line {line_num}: {e}")
     else:
-        # JSON format - array of objects
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         

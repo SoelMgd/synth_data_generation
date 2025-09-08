@@ -3,157 +3,8 @@ import argparse
 import string
 import json
 from pathlib import Path
-from typing import List, Dict, Tuple
-from html.parser import HTMLParser
 from .types import HTMLValidationProblem
-
-class HTMLValidator(HTMLParser):
-    """Enhanced validator to check if generated HTML is syntactically correct."""
-    
-    def __init__(self):
-        super().__init__()
-        self.errors = []
-        self.tag_stack = []
-        self.self_closing_tags = {
-            'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
-            'link', 'meta', 'param', 'source', 'track', 'wbr'
-        }
-        # HTML5 semantic rules
-        self.block_elements = {
-            'div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'section', 
-            'article', 'aside', 'nav', 'header', 'footer', 'main', 'form',
-            'fieldset', 'blockquote', 'pre', 'ul', 'ol', 'li', 'dl', 'dt', 'dd'
-        }
-        self.inline_elements = {
-            'span', 'a', 'strong', 'em', 'b', 'i', 'small', 'code', 'kbd',
-            'var', 'samp', 'sub', 'sup', 'mark', 'del', 'ins', 'q', 'cite',
-            'abbr', 'dfn', 'time', 'label', 'button'
-        }
-        # Required attributes for certain tags
-        self.required_attrs = {
-            'img': ['src', 'alt'],
-            'a': [],  # href not always required (can be just anchor)
-            'input': ['type'],
-            'label': [],  # for attribute recommended but not required
-            'form': ['method', 'action'],
-            'meta': ['charset'],  # for charset meta
-        }
-    
-    def handle_starttag(self, tag, attrs):
-        if tag not in self.self_closing_tags:
-            self.tag_stack.append((tag, attrs))
-        
-        # Validate attributes
-        self._validate_attributes(tag, attrs)
-        
-        # Check semantic nesting rules
-        self._validate_nesting(tag)
-    
-    def handle_endtag(self, tag):
-        if tag in self.self_closing_tags:
-            self.errors.append(f"Self-closing tag {tag} should not have end tag")
-            return
-            
-        if not self.tag_stack:
-            self.errors.append(f"Unexpected closing tag: {tag}")
-            return
-            
-        if self.tag_stack[-1][0] != tag:
-            self.errors.append(f"Mismatched tags: expected {self.tag_stack[-1][0]}, got {tag}")
-            return
-            
-        self.tag_stack.pop()
-    
-    def _validate_attributes(self, tag: str, attrs: List[Tuple[str, str]]):
-        """Validate attributes for specific tags."""
-        attr_dict = dict(attrs)
-        
-        # Check required attributes
-        if tag in self.required_attrs:
-            for required_attr in self.required_attrs[tag]:
-                if required_attr not in attr_dict:
-                    # Only error for critical attributes
-                    if tag == 'img' and required_attr in ['src', 'alt']:
-                        self.errors.append(f"Tag {tag} missing required attribute: {required_attr}")
-                    elif tag == 'input' and required_attr == 'type':
-                        self.errors.append(f"Tag {tag} missing required attribute: {required_attr}")
-        
-        # Validate specific attribute values
-        for attr_name, attr_value in attrs:
-            if attr_name == 'type' and tag == 'input':
-                valid_input_types = {
-                    'text', 'password', 'email', 'tel', 'url', 'search', 'number',
-                    'range', 'date', 'time', 'datetime-local', 'month', 'week',
-                    'color', 'file', 'hidden', 'checkbox', 'radio', 'submit',
-                    'reset', 'button', 'image'
-                }
-                if attr_value not in valid_input_types:
-                    self.errors.append(f"Invalid input type: {attr_value}")
-            
-            elif attr_name == 'method' and tag == 'form':
-                valid_methods = {'get', 'post', 'dialog'}
-                if attr_value.lower() not in valid_methods:
-                    self.errors.append(f"Invalid form method: {attr_value}")
-    
-    def _validate_nesting(self, tag: str):
-        """Validate semantic nesting rules."""
-        if not self.tag_stack:
-            return
-        
-        parent_tag = self.tag_stack[-1][0]
-        
-        # P elements cannot contain block elements
-        if parent_tag == 'p' and tag in self.block_elements:
-            self.errors.append(f"Block element {tag} cannot be nested inside <p>")
-        
-        # Button elements cannot contain interactive elements
-        if parent_tag == 'button' and tag in {'a', 'button', 'input', 'select', 'textarea'}:
-            self.errors.append(f"Interactive element {tag} cannot be nested inside <button>")
-        
-        # A elements cannot contain other interactive elements (but icons are OK)
-        if parent_tag == 'a' and tag in {'a', 'button', 'input', 'select', 'textarea'}:
-            self.errors.append(f"Interactive element {tag} cannot be nested inside <a>")
-    
-    def error(self, message):
-        self.errors.append(f"Parse error: {message}")
-    
-    def is_valid(self, html: str) -> Tuple[bool, List[str]]:
-        """Check if HTML is valid and return errors if any."""
-        self.errors = []
-        self.tag_stack = []
-        
-        try:
-            self.feed(html)
-            
-            # Check for unclosed tags
-            if self.tag_stack:
-                for tag, _ in self.tag_stack:
-                    self.errors.append(f"Unclosed tag: {tag}")
-            
-            return len(self.errors) == 0, self.errors
-            
-        except Exception as e:
-            self.errors.append(f"Parse error: {str(e)}")
-            return False, self.errors
-
-def validate_html_with_external_tool(html: str) -> Tuple[bool, List[str]]:
-    """Alternative validation using external tools (if available)."""
-    try:
-        # Try using html5lib for more comprehensive validation
-        import html5lib
-        from html5lib import parse
-        
-        # Parse with html5lib (more lenient but standards-compliant)
-        try:
-            doc = parse(html, namespaceHTMLElements=False)
-            return True, []
-        except Exception as e:
-            return False, [f"HTML5 parsing error: {str(e)}"]
-            
-    except ImportError:
-        # Fallback to our custom validator
-        validator = HTMLValidator()
-        return validator.is_valid(html)
+from .verify import validate_html_with_external_tool
 
 def generate_random_text(min_words: int = 3, max_words: int = 10) -> str:
     """Generate random text for content."""
@@ -252,7 +103,6 @@ def generate_form_component() -> str:
         <input type="hidden" name="csrf_token" value="{''.join(random.choices(string.ascii_letters + string.digits, k=32))}">
         <input type="hidden" name="form_type" value="{form_type}">'''
     
-    # Add various input types
     field_types = [
         ('text', 'name', 'Full Name', True),
         ('email', 'email', 'Email Address', True),
@@ -274,7 +124,6 @@ def generate_form_component() -> str:
             <div class="invalid-feedback">Please provide a valid {field_label.lower()}.</div>
         </div>'''
     
-    # Add select dropdown
     if random.choice([True, False]):
         select_id = generate_random_id()
         options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
@@ -295,7 +144,6 @@ def generate_form_component() -> str:
             <div class="invalid-feedback">Please select a category.</div>
         </div>'''
     
-    # Add textarea
     if random.choice([True, False]):
         textarea_id = generate_random_id()
         form_html += f'''
@@ -306,7 +154,6 @@ def generate_form_component() -> str:
             <div class="form-text">Maximum 1000 characters.</div>
         </div>'''
     
-    # Add checkboxes/radio buttons
     if random.choice([True, False]):
         checkbox_type = random.choice(['checkbox', 'radio'])
         group_name = 'preferences' if checkbox_type == 'checkbox' else 'choice'
@@ -330,7 +177,6 @@ def generate_form_component() -> str:
             </fieldset>
         </div>'''
     
-    # Add submit button
     form_html += f'''
         <div class="form-actions">
             <button type="submit" class="{generate_random_class()}">
@@ -349,8 +195,7 @@ def generate_form_component() -> str:
 def generate_card_grid() -> str:
     """Generate a grid of cards with various content."""
     num_cards = random.randint(3, 8)
-    grid_html = f'''
-    <div class="row g-4">'''
+    grid_html = """<div class="row g-4">"""
     
     for i in range(num_cards):
         card_id = generate_random_id()
@@ -370,7 +215,6 @@ def generate_card_grid() -> str:
                     <h5 class="card-title">{generate_random_text(2, 5)}</h5>
                     <p class="card-text">{generate_random_text(10, 25)}</p>'''
         
-        # Add random elements
         if random.choice([True, False]):
             grid_html += f'''
                     <div class="card-meta mb-2">
@@ -381,8 +225,7 @@ def generate_card_grid() -> str:
                     </div>'''
         
         if random.choice([True, False]):
-            grid_html += f'''
-                    <div class="card-tags mb-2">'''
+            grid_html += """<div class="card-tags mb-2">"""
             for j in range(random.randint(1, 3)):
                 grid_html += f'''
                         <span class="badge bg-{random.choice(['primary', 'secondary', 'success', 'info'])}">{generate_random_text(1, 2)}</span>'''
@@ -448,7 +291,6 @@ def generate_complex_html_by_theme(theme: str) -> str:
     
     config = themes_config.get(theme, themes_config['ecommerce'])
     
-    # Generate comprehensive HTML
     html = f'''<!DOCTYPE html>
 <html lang="en" data-theme="{theme}" class="no-js">
 <head>
@@ -490,7 +332,7 @@ def generate_complex_html_by_theme(theme: str) -> str:
 
     <main id="main-content" class="main-content" role="main">'''
     
-    # Add theme-specific sections
+    # Theme-specific sections
     sections = random.sample(config['components'], random.randint(4, len(config['components'])))
     
     for i, section in enumerate(sections):
@@ -606,8 +448,7 @@ def generate_complex_html_by_theme(theme: str) -> str:
                                 <div class="testimonial-rating mb-3">'''
                 
                 for star in range(5):
-                    html += f'''
-                                    <i class="fas fa-star text-warning"></i>'''
+                    html += """<i class="fas fa-star text-warning"></i>"""
                 
                 html += f'''
                                 </div>
@@ -659,7 +500,7 @@ def generate_complex_html_by_theme(theme: str) -> str:
             </div>
         </section>'''
     
-    # Add footer
+    # Footer
     html += f'''
     </main>
 
@@ -789,7 +630,7 @@ def introduce_html_error(valid_html: str) -> str:
     error_type = random.choice(error_types)
     
     if error_type == 'unclosed_tag':
-        # Find a tag to leave unclosed
+        # Find a tag to leave unclosed and remove it
         import re
         tag_pattern = r'<(\w+)[^>]*>.*?</\1>'
         matches = list(re.finditer(tag_pattern, valid_html, re.DOTALL))
@@ -797,21 +638,19 @@ def introduce_html_error(valid_html: str) -> str:
         if matches:
             match = random.choice(matches)
             tag_name = match.group(1)
-            # Remove the closing tag
             closing_tag = f'</{tag_name}>'
             last_occurrence = valid_html.rfind(closing_tag, match.start(), match.end())
             if last_occurrence != -1:
                 valid_html = valid_html[:last_occurrence] + valid_html[last_occurrence + len(closing_tag):]
     
     elif error_type == 'malformed_attribute':
-        # Find an attribute to malform
+        # Find an attribute to remove the closing quote
         import re
         attr_pattern = r'(\w+)="([^"]*)"'
         matches = list(re.finditer(attr_pattern, valid_html))
         
         if matches:
             match = random.choice(matches)
-            # Remove closing quote
             malformed = f'{match.group(1)}="{match.group(2)}'
             valid_html = valid_html[:match.start()] + malformed + valid_html[match.end():]
     
@@ -824,7 +663,6 @@ def introduce_html_error(valid_html: str) -> str:
         if matches:
             match = random.choice(matches)
             content = match.group(1)
-            # Insert a div inside p (invalid nesting)
             invalid_content = f'<div class="invalid-nesting">{content}</div>'
             valid_html = valid_html[:match.start(1)] + invalid_content + valid_html[match.end(1):]
     
@@ -833,34 +671,27 @@ def introduce_html_error(valid_html: str) -> str:
 def generate_html_validation_problem() -> HTMLValidationProblem:
     """Generate an HTML validation problem (valid or invalid)."""
     
-    # Choose random theme
     themes = ['ecommerce', 'blog', 'corporate', 'portfolio', 'dashboard']
     theme = random.choice(themes)
     
-    # Generate complex HTML
     valid_html = generate_complex_html_by_theme(theme)
     
-    # Validate that our generated HTML is actually valid using external library
     is_valid, errors = validate_html_with_external_tool(valid_html)
     
-    # If our generator created invalid HTML, fix it by regenerating
     max_attempts = 3
     attempts = 0
     while not is_valid and attempts < max_attempts:
         print(f"  Warning: Generated HTML has validation errors, regenerating... (attempt {attempts + 1})")
         if errors:
-            print(f"  Errors: {errors[:2]}")  # Show first 2 errors
+            print(f"  Errors: {errors[:2]}") 
         valid_html = generate_complex_html_by_theme(theme)
         is_valid, errors = validate_html_with_external_tool(valid_html)
         attempts += 1
     
-    # If still invalid after max attempts, this is a problem
     if not is_valid:
-        print(f"  ERROR: Could not generate valid HTML after {max_attempts} attempts!")
-        print(f"  Final errors: {errors}")
-        # Use the HTML anyway but mark it as a generation issue
+        raise ValueError("Could not generate valid HTML after max attempts")
     
-    # 50% chance to keep it valid, 50% chance to invalidate it
+    # 50% valid, 50% invalid data sample
     should_be_valid = random.choice([True, False])
     
     if should_be_valid:
@@ -869,7 +700,6 @@ def generate_html_validation_problem() -> HTMLValidationProblem:
             is_valid=True
         )
     else:
-        # Introduce error ONLY if base HTML is valid
         if is_valid:
             invalid_html = introduce_html_error(valid_html)
             return HTMLValidationProblem(
@@ -877,7 +707,6 @@ def generate_html_validation_problem() -> HTMLValidationProblem:
                 is_valid=False
             )
         else:
-            # If base HTML is invalid, return it as invalid (don't introduce more errors)
             return HTMLValidationProblem(
                 html_string=valid_html,
                 is_valid=False
@@ -890,7 +719,6 @@ def main():
     
     args = parser.parse_args()
     
-    # Create output directory if it doesn't exist
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
@@ -902,18 +730,15 @@ def main():
         problem = generate_html_validation_problem()
         problems.append(problem.model_dump())
         
-        # Show progress
         if (i + 1) % 5 == 0 or (i + 1) == args.num_samples:
             print(f"Generated {i + 1}/{args.num_samples} problems")
     
-    # Save problems
     with open(output_path, 'w', encoding='utf-8') as f:
         for problem in problems:
             f.write(json.dumps(problem, ensure_ascii=False) + '\n')
     
     print(f"Saved {len(problems)} problems to {output_path}")
     
-    # Show statistics
     valid_count = sum(1 for p in problems if p['is_valid'])
     invalid_count = len(problems) - valid_count
     
@@ -921,7 +746,6 @@ def main():
     print(f"  Valid HTML: {valid_count} ({valid_count/len(problems)*100:.1f}%)")
     print(f"  Invalid HTML: {invalid_count} ({invalid_count/len(problems)*100:.1f}%)")
     
-    # Show sample lengths
     lengths = [len(p['html_string']) for p in problems]
     print(f"  Average HTML length: {sum(lengths)/len(lengths):.0f} characters")
     print(f"  Min/Max length: {min(lengths)}/{max(lengths)} characters")
